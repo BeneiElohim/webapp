@@ -32,30 +32,6 @@ Game Review Hub is a platform where users can:
 - **Backend:** Java Spring Boot
 - **Database:** SQLite
 
-## Requirements 📋
-
-- **Performance:**
-  - Fast page load times (< 3 seconds).
-  - Supports up to 50 concurrent users during peak hours.
-- **Usability:**
-  - Intuitive and easy-to-navigate interface.
-  - Responsive design for desktops, tablets, and laptops.
-- **Security:**
-  - HTTPS for secure data transmission.
-  - Passwords hashed with strong algorithms (e.g., bcrypt).
-  - Secure session management with timeouts.
-- **Compatibility:**
-  - Works on modern browsers (Chrome, Firefox, Safari, Edge).
-
-## Constraints & Assumptions ⚠️
-
-- **Constraints:**
-  - No mobile-specific features (desktop-focused).
-  - Game data is sourced from third-party APIs.
-- **Assumptions:**
-  - Users have an active internet connection.
-  - All reviews and ratings are in English (future support for more languages is possible).
-
 ## Team 👥
 
 - **Frontend/Networking:** İsmail Mert Tarihçi
