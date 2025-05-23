@@ -45,9 +45,14 @@ class GamePublisher(SQLModel, table=True):
     publisherId: int = Field(foreign_key="publisher.id", primary_key=True)
 
 
-class UserRequestModel(BaseModel):
+class UserIn(BaseModel):
     username: str = Field(min_length=5, max_length=15)
     password: str = Field(min_length=8, max_length=15)
+
+
+class UserOut(BaseModel):
+    username: str = Field(min_length=5, max_length=15)
+    id: int
 
 
 class User(SQLModel, table=True):
@@ -72,6 +77,6 @@ class Review(SQLModel, table=True):
     userId: int = Field(foreign_key="user.id")
     gameId: int = Field(foreign_key="game.id")
     content: str = Field(min_length=1)
-    score: int = Field(gt=0, lt=100)
+    score: int = Field(ge=0, le=100)
     likes: int = Field(default=0)
     dislikes: int = Field(default=0)
