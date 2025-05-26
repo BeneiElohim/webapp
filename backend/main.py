@@ -144,7 +144,8 @@ async def getCurrentProfile(
     ).first()
     if not profile:
         raise HTTPException(
-            status_code=400, detail="Current user doesn't have a profile yet."
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Current user doesn't have a profile yet.",
         )
     return profile
 
