@@ -135,6 +135,20 @@ def register(userToCreate: models.UserCreate, db: SessionDep):
     return user
 
 
+@app.get("/profiles/me", response_model=models.Profile, status_code=status.HTTP_200_OK)
+async def getCurrentProfile(
+    currentUser: Annotated[models.User, Depends(get_current_user)], db: SessionDep
+):
+    profile = db.exec(
+        select(models.Profile).where(models.Profile.userId == currentUser.id)
+    ).first()
+    if not profile:
+        raise HTTPException(
+            status_code=400, detail="Current user doesn't have a profile yet."
+        )
+    return profile
+
+
 @app.post(
     "/users/me/createProfile",
     response_model=models.Profile,
