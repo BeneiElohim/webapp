@@ -7,8 +7,18 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   const login = async (username, password) => {
-    const form = new URLSearchParams({ username, password });
-    const res = await api.post('/token', form);
+
+    const formParams = new URLSearchParams();
+    formParams.append('username', username);
+    formParams.append('password', password);
+
+    // explicitly send as x-www-form-urlencoded
+    const res = await api.post(
+      '/token',
+      formParams.toString(),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+    );
+
     const t = res.data.access_token;
     localStorage.setItem('token', t);
     api.defaults.headers.common['Authorization'] = `Bearer ${t}`;

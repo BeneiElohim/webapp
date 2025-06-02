@@ -14,7 +14,6 @@ from starlette.middleware.cors import CORSMiddleware
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Runs before app starts
     create_db_and_tables()
     yield
 

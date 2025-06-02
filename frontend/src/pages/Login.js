@@ -12,7 +12,7 @@ export default function Login() {
     e.preventDefault();
     try {
       await login(username, password);
-      navigate('/home');
+      navigate('/');
     } catch {
       alert('Login failed');
     }
