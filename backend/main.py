@@ -21,11 +21,11 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
-  CORSMiddleware,
-  allow_origins=["http://localhost:3000"],
-  allow_credentials=True,
-  allow_methods=["*"],
-  allow_headers=["*"],
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 SessionDep = Annotated[Session, Depends(get_session)]
@@ -111,7 +111,7 @@ async def login_for_access_token(
     return models.Token(access_token=accessToken, token_type="bearer")
 
 
-@app.get("/users/me/", response_model=models.UserResponse)
+@app.get("/users/me", response_model=models.UserResponse)
 async def read_users_me(
     current_user: Annotated[models.User, Depends(get_current_user)],
 ):
@@ -181,7 +181,7 @@ async def createProfile(
     return profile
 
 
-@app.get("/users/me/reviews/", response_model=list[models.Review], status_code=200)
+@app.get("/users/me/reviews", response_model=list[models.Review], status_code=200)
 async def getCurrentUserReviews(
     current_user: Annotated[models.User, Depends(get_current_user)],
     db: SessionDep,
@@ -214,7 +214,7 @@ async def getCurrentUserReviews(
     return reviewOuts
 
 
-@app.get("/users/{userId}/reviews/", response_model=list[models.ReviewOut])
+@app.get("/users/{userId}/reviews", response_model=list[models.ReviewOut])
 async def getUserReviews(userId: int, db: SessionDep):
     userProfile = db.exec(
         select(models.Profile).where(models.Profile.userId == userId)
@@ -246,7 +246,7 @@ async def getUserReviews(userId: int, db: SessionDep):
     return reviewOuts
 
 
-@app.put("/profiles/me/", response_model=models.Profile, status_code=200)
+@app.put("/profiles/me", response_model=models.Profile, status_code=200)
 async def updateProfile(
     updateInfo: models.ProfileUpdate,
     current_user: Annotated[models.User, Depends(get_current_user)],
@@ -395,7 +395,7 @@ async def getGameReviews(gameId: int, db: SessionDep):
     return reviewOuts
 
 
-@app.get("/games/", status_code=200, response_model=list[models.GameOut])
+@app.get("/games", status_code=200, response_model=list[models.GameOut])
 async def getAllGamesInfo(db: SessionDep):
     allGames = db.exec(
         select(models.Game).order_by(desc(models.Game.averageRating))
@@ -464,7 +464,7 @@ async def createReview(
 
 
 @app.put(
-    "/users/me/reviews/", response_model=models.Review, status_code=status.HTTP_200_OK
+    "/users/me/reviews", response_model=models.Review, status_code=status.HTTP_200_OK
 )
 async def updateReview(
     currentUser: Annotated[models.User, Depends(get_current_user)],
