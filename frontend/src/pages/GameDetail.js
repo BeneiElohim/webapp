@@ -20,7 +20,7 @@ export default function GameDetail() {
   useEffect(() => {
     if (!token) return;
     Promise.all([
-      api.get('/users/me/'),
+      api.get('/users/me'),
       api.get(`/games/${gameId}`),
       api.get(`/games/${gameId}/reviews`),
     ])

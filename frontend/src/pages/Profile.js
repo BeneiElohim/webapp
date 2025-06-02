@@ -11,12 +11,12 @@ export default function Profile() {
   const [picture, setPicture] = useState('');
 
   useEffect(() => {
-    api.get('/users/me/').then(res => setUser(res.data));
-    api.get('/users/me/reviews/').then(res => setReviews(res.data));
+    api.get('/users/me').then(res => setUser(res.data));
+    api.get('/users/me/reviews').then(res => setReviews(res.data));
   }, [token]);
 
   const handleUpdate = async () => {
-    await api.put('/profiles/me/', {
+    await api.put('/profiles/me', {
       bio,
       nickname,
       profilePictureRelativePath: picture,
