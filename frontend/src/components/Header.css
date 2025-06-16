@@ -1,0 +1,35 @@
+.hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background: #24292f;
+  color: #fff;
+}
+
+.hdr__brand {
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+.hdr__nav a {
+  margin-right: 1rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.hdr__nav button {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.hdr__nav button:hover,
+.hdr__nav a:hover {
+  opacity: 0.85;
+}

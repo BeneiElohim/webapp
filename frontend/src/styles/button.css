@@ -1,0 +1,12 @@
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn--secondary { background: #6c757d; }
+.btn--danger    { background: #dc3545; }
+
+.btn:hover { opacity: 0.9; }

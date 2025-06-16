@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { AuthContext } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import Layout from './components/Layout';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -19,53 +20,48 @@ function HomeWrapper() {
 
 export default function App() {
   return (
-    <Routes>
-      {/* Root: show Home if logged in, otherwise go to /login */}
-      <Route path="/" element={<HomeWrapper />} />
+    <Layout>
+      <Routes>
+        <Route path="/" element={<HomeWrapper />} />
 
-      {/* Create‐profile (only for logged‐in users) */}
-      <Route
-        path="/create-profile"
-        element={
-          <PrivateRoute>
-            <CreateProfile />
-          </PrivateRoute>
-        }
-      />
+        <Route
+          path="/create-profile"
+          element={
+            <PrivateRoute>
+              <CreateProfile />
+            </PrivateRoute>
+          }
+        />
 
-      {/* Game list: /games */}
-      <Route
-        path="/games"
-        element={
-          <PrivateRoute>
-            <GameList />
-          </PrivateRoute>
-        }
-      />
+        <Route
+          path="/games"
+          element={
+            <PrivateRoute>
+              <GameList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/games/:id"
+          element={
+            <PrivateRoute>
+              <GameDetail />
+            </PrivateRoute>
+          }
+        />
 
-      {/* Game detail: /games/:id */}
-      <Route
-        path="/games/:id"
-        element={
-          <PrivateRoute>
-            <GameDetail />
-          </PrivateRoute>
-        }
-      />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-      {/* Auth flows */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-
-      {/* User’s own profile page */}
-      <Route
-        path="/profile"
-        element={
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        }
-      />
-    </Routes>
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </Layout>
   );
 }
