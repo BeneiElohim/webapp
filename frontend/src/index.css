@@ -62,4 +62,4 @@ li {
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-@import './styles/buttons.css';
+@import './styles/button.css';
