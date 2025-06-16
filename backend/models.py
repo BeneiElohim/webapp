@@ -138,6 +138,10 @@ class ReviewOut(BaseModel):
     createdAt: datetime
 
 
+class UserReviewOut(ReviewOut):
+    gameName: str
+
+
 class Token(BaseModel):
     access_token: str
     token_type: str

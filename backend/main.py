@@ -181,7 +181,9 @@ async def createProfile(
     return profile
 
 
-@app.get("/users/me/reviews", response_model=list[models.Review], status_code=200)
+@app.get(
+    "/users/me/reviews", response_model=list[models.UserReviewOut], status_code=200
+)
 async def getCurrentUserReviews(
     current_user: Annotated[models.User, Depends(get_current_user)],
     db: SessionDep,
@@ -196,9 +198,9 @@ async def getCurrentUserReviews(
     ).first()
     if not currentUserProfile:
         raise HTTPException(status_code=400, detail="No profile for this User")
-    reviewOuts: list[models.ReviewOut] = []
+    userReviewOuts: list[models.UserReviewOut] = []
     for review in allCurrentUserReviews:
-        reviewOut = models.ReviewOut(
+        userReviewOut = models.UserReviewOut(
             reviewId=review.reviewId,
             userId=review.userId,
             content=review.content,
@@ -209,12 +211,15 @@ async def getCurrentUserReviews(
             nickname=currentUserProfile.nickname,
             createdAt=review.createdAt,
             gameId=review.gameId,
+            gameName=db.exec(select(models.Game).where(models.Game.id == review.gameId))
+            .first()
+            .name,  # type: ignore
         )
-        reviewOuts.append(reviewOut)
-    return reviewOuts
+        userReviewOuts.append(userReviewOut)
+    return userReviewOuts
 
 
-@app.get("/users/{userId}/reviews", response_model=list[models.ReviewOut])
+@app.get("/users/{userId}/reviews", response_model=list[models.UserReviewOut])
 async def getUserReviews(userId: int, db: SessionDep):
     userProfile = db.exec(
         select(models.Profile).where(models.Profile.userId == userId)
@@ -227,9 +232,9 @@ async def getUserReviews(userId: int, db: SessionDep):
         .where(models.Review.userId == userId)
         .order_by(desc(models.Review.createdAt))
     ).all()
-    reviewOuts: list[models.ReviewOut] = []
+    userReviewOuts: list[models.UserReviewOut] = []
     for review in userReviews:
-        reviewOut = models.ReviewOut(
+        userReviewOut = models.UserReviewOut(
             reviewId=review.reviewId,
             userId=review.userId,
             content=review.content,
@@ -240,10 +245,13 @@ async def getUserReviews(userId: int, db: SessionDep):
             nickname=userProfile.nickname,
             createdAt=review.createdAt,
             gameId=review.gameId,
+            gameName=db.exec(select(models.Game).where(models.Game.id == review.gameId))
+            .first()
+            .name,  # type: ignore
         )
-        reviewOuts.append(reviewOut)
+        userReviewOuts.append(userReviewOut)
 
-    return reviewOuts
+    return userReviewOuts
 
 
 @app.put("/profiles/me", response_model=models.Profile, status_code=200)
