@@ -1,4 +1,7 @@
-from fastapi import Depends, FastAPI, HTTPException, status
+import os
+import shutil
+import uuid
+from fastapi import Depends, FastAPI, HTTPException, status, UploadFile, Form, File
 from contextlib import asynccontextmanager
 from typing import Annotated, Any
 from sqlmodel import Session, select, desc, SQLModel  # type: ignore
@@ -508,3 +511,72 @@ async def updateReview(
     db.commit()
     db.refresh(existingReview)
     return existingReview
+
+
+adminUsernames = ["Batuhan", "isomert"]
+
+
+@app.post("/admin/createGame", status_code=status.HTTP_201_CREATED)
+async def createGame(
+    currentUser: Annotated[models.User, Depends(get_current_user)],
+    db: SessionDep,
+    name: str = Form(...),
+    releaseYear: int = Form(...),
+    description: str = Form(...),
+    publisher: str = Form(...),
+    genreIds: list[int] = Form(...),
+    platformIds: list[int] = Form(...),
+    coverArt: UploadFile = File(...),
+):
+    if currentUser.username not in adminUsernames:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Admin access required."
+        )
+
+    existingGame = db.exec(select(models.Game).where(models.Game.name == name)).first()
+
+    if existingGame:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail="Game already exists"
+        )
+
+    # 1. Generate a unique filename
+    ext = os.path.splitext(coverArt.filename)[1]  # type: ignore
+    filename = f"{uuid.uuid4().hex}{ext}"
+    relativePath = f"../images/{filename}"
+
+    valid_extensions = [".jpg", ".jpeg", ".png"]
+    if ext.lower() not in valid_extensions:  # type: ignore
+        raise HTTPException(status_code=400, detail="Unsupported image format.")
+
+    # 2. Save image to disk
+    with open(relativePath, "wb") as buffer:
+        shutil.copyfileobj(coverArt.file, buffer)
+
+    newGame = models.Game(
+        name=name,
+        description=description,
+        releaseYear=releaseYear,
+        publisher=publisher,
+        coverArtRelativePath=relativePath,
+    )
+    db.add(newGame)
+    db.commit()
+    db.refresh(newGame)
+
+    for genreId in genreIds:
+        gameGenre = models.GameGenre(
+            gameId=newGame.id,  # type: ignore
+            genreId=genreId,
+        )
+        db.add(gameGenre)
+
+    for platformId in platformIds:
+        gamePlatform = models.GamePlatform(
+            gameId=newGame.id,  # type: ignore
+            platformId=platformId,
+        )
+        db.add(gamePlatform)
+
+    db.commit()
+    return newGame
