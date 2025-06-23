@@ -12,6 +12,7 @@ import CreateProfile from './pages/CreateProfile';
 import Profile from './pages/Profile';
 import GameList from './pages/GameList';
 import GameDetail from './pages/GameDetail';
+import AdminGameCreate from './pages/AdminGameCreate';
 
 function HomeWrapper() {
   const { token } = useContext(AuthContext);
@@ -38,6 +39,14 @@ export default function App() {
           element={
             <PrivateRoute>
               <GameList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/create-game"
+          element={
+            <PrivateRoute adminOnly>
+              <AdminGameCreate />
             </PrivateRoute>
           }
         />

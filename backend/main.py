@@ -515,6 +515,28 @@ async def updateReview(
 
 adminUsernames = ["Batuhan", "isomert"]
 
+@app.get("/genres", response_model=list[models.Genre])
+async def getAllGenres(db: SessionDep):
+    genres = db.exec(select(models.Genre)).all()
+    return list(genres)
+
+
+@app.get("/platforms", response_model=list[models.Platform])
+async def getAllPlatforms(db: SessionDep):
+    platforms = db.exec(select(models.Platform)).all()
+    return list(platforms)
+
+
+def is_admin(user: models.User) -> bool:
+
+    return user.username in adminUsernames
+
+
+@app.get("/users/me/is-admin")
+async def check_admin_status(
+    current_user: Annotated[models.User, Depends(get_current_user)]
+):
+    return {"is_admin": is_admin(current_user)}
 
 @app.post("/admin/createGame", status_code=status.HTTP_201_CREATED)
 async def createGame(

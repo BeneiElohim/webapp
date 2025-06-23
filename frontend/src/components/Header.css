@@ -3,33 +3,101 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1.25rem;
-  background: #24292f;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
   color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .hdr__brand {
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 1.3rem;
   text-decoration: none;
   color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.hdr__nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .hdr__nav a {
-  margin-right: 1rem;
   color: #fff;
   text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.hdr__nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
 }
 
 .hdr__nav button {
-  background: transparent;
-  border: 1px solid #fff;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  border: none;
   color: #fff;
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-.hdr__nav button:hover,
-.hdr__nav a:hover {
-  opacity: 0.85;
+.hdr__nav button:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+}
+
+.admin-link {
+  background: linear-gradient(135deg, #27ae60, #229954) !important;
+  color: white !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.admin-link:hover {
+  background: linear-gradient(135deg, #229954, #1e8449) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ecf0f1;
+  font-size: 0.9rem;
+}
+
+.admin-badge {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .hdr {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .hdr__nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .user-info {
+    order: -1;
+  }
 }
