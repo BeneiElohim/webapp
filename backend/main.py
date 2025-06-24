@@ -32,7 +32,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+images_dir = os.path.join(os.path.dirname(__file__), "images")
+os.makedirs(images_dir, exist_ok=True)
+app.mount("/images", StaticFiles(directory=images_dir), name="images")
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
