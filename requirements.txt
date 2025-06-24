@@ -1,0 +1,7 @@
+fastapi[standard]==0.115.12
+sqlmodel
+passlib
+bcrypt
+uvicorn[standard]
+PyJWT
+python-multipart
