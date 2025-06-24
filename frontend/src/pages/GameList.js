@@ -40,7 +40,7 @@ export default function GameList() {
             <Link to={`/games/${g.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img
-                  src={g.coverArtRelativePath}
+                  src={`https://webapp-production-23b4.up.railway.app${g.coverArtRelativePath}`}
                   alt={`${g.name} cover`}
                   style={{
                     width: 64,
