@@ -13,6 +13,7 @@ import jwt
 from jwt.exceptions import InvalidTokenError
 from datetime import datetime, timedelta, timezone
 from starlette.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 
 @asynccontextmanager
@@ -30,6 +31,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
@@ -565,7 +568,7 @@ async def createGame(
     # 1. Generate a unique filename
     ext = os.path.splitext(coverArt.filename)[1]  # type: ignore
     filename = f"{uuid.uuid4().hex}{ext}"
-    relativePath = f"../images/{filename}"
+    relativePath = f"/images/{filename}"
 
     valid_extensions = [".jpg", ".jpeg", ".png"]
     if ext.lower() not in valid_extensions:  # type: ignore
