@@ -43,7 +43,7 @@ export default function CreateProfile() {
           <input
             type="text"
             value={nickname}
-            onChange={e => setNickname(e.target.value)}
+            onChange={(e) => setNickname(e.target.value)}
             required
             style={{ width: '100%', padding: '0.5rem' }}
           />
@@ -52,22 +52,11 @@ export default function CreateProfile() {
           <label>Bio</label>
           <textarea
             value={bio}
-            onChange={e => setBio(e.target.value)}
+            onChange={(e) => setBio(e.target.value)}
             placeholder="Tell us a bit about yourself"
             rows={3}
             style={{ width: '100%', padding: '0.5rem' }}
           />
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>Profile Picture Path</label>
-          <input
-            type="text"
-            value={picture}
-            onChange={e => setPicture(e.target.value)}
-            placeholder="/images/profile1.png"
-            style={{ width: '100%', padding: '0.5rem' }}
-          />
-          <small>Relative path to image (optional)</small>
         </div>
         {error && (
           <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>
