@@ -577,9 +577,9 @@ async def createGame(
         raise HTTPException(status_code=400, detail="Unsupported image format.")
 
     # 2. Save image to disk
-    with open(relativePath, "wb") as buffer:
+    full_path = os.path.join(images_dir, filename)
+    with open(full_path, "wb") as buffer:
         shutil.copyfileobj(coverArt.file, buffer)
-
     newGame = models.Game(
         name=name,
         description=description,
