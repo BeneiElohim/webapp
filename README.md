@@ -8,28 +8,24 @@ Game Review Hub is a platform where users can:
 
 - **Rate** games on a scale of 0 to 100.
 - **Review** games with detailed comments and text formatting.
-- **Interact** by commenting on and voting for reviews.
-- **Discover** new games by searching via title, genre, or platform.
+- **Discover** new games by searching via title.
 
 ## Features 🚀
 
 - **User Registration & Authentication 🔐**  
-  Sign up with an email or social media (Google, Facebook), log in/out, and recover passwords.
+  Sign up with an email, log in/out.
 - **Profile Management 👤**  
-  Manage your profile with a username, profile picture, and a list of your reviewed games.
+  Manage your profile with a username, bio, and a list of your reviewed games.
 - **Game Discovery & Details 🔍**  
   Search for games and view details like title, release date, genre, and cover art.
 - **Game Ratings & Reviews ⭐📝**  
   Rate games, write formatted text reviews, and see them displayed in chronological order.
-- **Community Interactions 💬👍👎**  
-  Comment on reviews, upvote or downvote feedback to help others find the best insights.
-- **Notifications 🔔**  
-  Receive updates when someone interacts with your review or when new game updates are available.
+
 
 ## Technical Details 🛠️
 
 - **Frontend:** React.js
-- **Backend:** Java Spring Boot
+- **Backend:** FastAPI
 - **Database:** SQLite
 
 ## Team 👥
